@@ -28,6 +28,7 @@ public class Calculator implements ActionListener {
 		for (int i = 0; i < 5; i++) {
 			fields[i] = new JTextField();
 			fields[i].setBounds(i*width, firstLine_y, 80, 80);
+			fields[i].setHorizontalAlignment(JTextField.CENTER);
 			buttons[i] = new JButton(btNames[i]);
 			buttons[i].setBounds(i*width, secondLine_y, 80, 80);
 		}

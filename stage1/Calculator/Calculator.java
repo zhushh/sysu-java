@@ -18,8 +18,8 @@ public class Calculator implements ActionListener {
 
 	public Calculator() {
 		int width = 80;
-		int firstLine_y = 0;
-		int secondLine_y = 80;
+		int y1 = 0;
+		int y2 = 80;
 		frame = new JFrame("Easy Calculator");
 		fields = new JTextField[5];
 		buttons = new JButton[5];
@@ -27,10 +27,10 @@ public class Calculator implements ActionListener {
 		String[] btNames = {"+", "-", "*", "/", "OK"};
 		for (int i = 0; i < 5; i++) {
 			fields[i] = new JTextField();
-			fields[i].setBounds(i*width, firstLine_y, 80, 80);
+			fields[i].setBounds(i*width, y1, 80, 80);
 			fields[i].setHorizontalAlignment(JTextField.CENTER);
 			buttons[i] = new JButton(btNames[i]);
-			buttons[i].setBounds(i*width, secondLine_y, 80, 80);
+			buttons[i].setBounds(i*width, y2, 80, 80);
 		}
 		fields[3].setText("=");
 

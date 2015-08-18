@@ -1,3 +1,6 @@
+// define for junit test
+// using in class HelloWorldTest
+
 import java.util.*;
 
 public class HelloWorld {

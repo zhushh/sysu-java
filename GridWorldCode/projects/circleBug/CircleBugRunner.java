@@ -12,28 +12,29 @@
  * GNU General Public License for more details.
  * 
  * @author Cay Horstmann
+ * @author Chris Nevison
+ * @author Barbara Cloud Wells
  */
 
 import info.gridworld.actor.ActorWorld;
-import info.gridworld.actor.Bug;
-import info.gridworld.actor.Rock;
+import info.gridworld.grid.Location;
+
+import java.awt.Color;
 
 /**
- * This class runs a world that contains a bug and a rock, added at random
- * locations. Click on empty locations to add additional actors. Click on
- * populated locations to invoke methods on their occupants. <br />
- * To build your own worlds, define your own actors and a runner class. See the
- * BoxBugRunner (in the boxBug folder) for an example. <br />
+ * This class runs a world that contains box bugs. <br />
  * This class is not tested on the AP CS A and AB exams.
  */
-public final class BugRunner
+public class CircleBugRunner
 {
-	private BugRunner() {}
     public static void main(String[] args)
     {
         ActorWorld world = new ActorWorld();
-        world.add(new Bug());
-        world.add(new Rock());
+        CircleBug alice = new CircleBug(5);
+        alice.setColor(Color.ORANGE);
+        CircleBug bob = new CircleBug(3);
+        world.add(new Location(7, 8), alice);
+        world.add(new Location(5, 5), bob);
         world.show();
     }
 }

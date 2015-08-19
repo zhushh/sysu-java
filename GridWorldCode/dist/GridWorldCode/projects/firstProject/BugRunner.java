@@ -26,9 +26,8 @@ import info.gridworld.actor.Rock;
  * BoxBugRunner (in the boxBug folder) for an example. <br />
  * This class is not tested on the AP CS A and AB exams.
  */
-public final class BugRunner
+public class BugRunner
 {
-	private BugRunner() {}
     public static void main(String[] args)
     {
         ActorWorld world = new ActorWorld();

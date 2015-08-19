@@ -31,7 +31,7 @@ public class ZBug extends Bug
     private static final int rotation_angle_2 = 225;
 
     /**
-     * Constructs a box bug that traces a square of a given side length
+     * Constructs a ZBug that traces a square of a given side length
      * @param length the side length
      */
     public ZBug(int length)

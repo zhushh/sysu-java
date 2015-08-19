@@ -29,12 +29,11 @@ public class DancingBugRunner
 {
     public static void main(String[] args)
     {
+        int[] arr = {0, 0, 2, 1, 1, 6, 7, 5};
         ActorWorld world = new ActorWorld();
-        DancingBug alice = new DancingBug(6);
+        DancingBug alice = new DancingBug(arr);
         alice.setColor(Color.ORANGE);
-        DancingBug bob = new DancingBug(3);
         world.add(new Location(7, 8), alice);
-        world.add(new Location(5, 5), bob);
         world.show();
     }
 }

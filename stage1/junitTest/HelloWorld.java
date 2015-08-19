@@ -4,7 +4,7 @@
 import java.util.*;
 
 public class HelloWorld {
-	String str;
+	private String str;
 
 	public void hello() {
 		str = "Hello World!";

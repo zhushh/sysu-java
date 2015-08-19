@@ -2,7 +2,7 @@
 <project name="javaTest" default="jar" basedir=".">
     <target name="clean">
         <delete dir="build"/>
-        </target>
+    </target>
     <target name="compile" depends="clean">
         <mkdir dir="build/classes"/>
         <javac srcdir="src" destdir="build/classes"/>

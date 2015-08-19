@@ -27,12 +27,6 @@ public class SimpleCalculator implements ActionListener
 			allButtons[i] = new JButton(str.substring(i,i+1));
 		}
 		clearButton = new JButton("CLEAR");
-
-		// call init
-		init();
-		// set textfield font and color
-		setFontAndColor();
-		addEventHandler();
 	}
 
 	public void addEventHandler() {
@@ -57,10 +51,14 @@ public class SimpleCalculator implements ActionListener
 
 			char ss = op.charAt(0);
 			switch (ss) {
-				case '+': field.setText((Double.parseDouble(m) + Double.parseDouble(n)) + ""); break;
-				case '-': field.setText((Double.parseDouble(m) - Double.parseDouble(n)) + ""); break;
-				case '*': field.setText((Double.parseDouble(m) * Double.parseDouble(n)) + ""); break;
-				case '/': field.setText((Double.parseDouble(m) / Double.parseDouble(n)) + ""); break;
+				case '+': field.setText((Double.parseDouble(m) + Double.parseDouble(n)) + "");
+					break;
+				case '-': field.setText((Double.parseDouble(m) - Double.parseDouble(n)) + "");
+					break;
+				case '*': field.setText((Double.parseDouble(m) * Double.parseDouble(n)) + "");
+					break;
+				case '/': field.setText((Double.parseDouble(m) / Double.parseDouble(n)) + "");
+					break;
 				default: break;
 			}
 
@@ -138,6 +136,12 @@ public class SimpleCalculator implements ActionListener
 	}
 
 	public static void main(String[] args) {
-		new SimpleCalculator().showMe();
+		SimpleCalculator sc = new SimpleCalculator();
+		// call init
+		sc.init();
+		// set textfield font and color
+		sc.setFontAndColor();
+		sc.addEventHandler();
+		sc.showMe();
 	}
 }

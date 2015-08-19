@@ -33,13 +33,9 @@ public class Calculator implements ActionListener {
 			buttons[i].setBounds(i*width, y2, 80, 80);
 		}
 		fields[3].setText("=");
-
-		init();
-		setFontAndColor();
-		addEventHandler();
 	}
 
-	public void init() {
+	public void myInit() {
 		frame.setLayout(new GridLayout(2, 5));
 		for (int i = 0; i < 5; i++) {
 			frame.add(fields[i]);
@@ -49,7 +45,7 @@ public class Calculator implements ActionListener {
 		}
 	}
 
-	public void setFontAndColor() {
+	public void mySetFontAndColor() {
 		fields[1].setFont(new Font("宋体", Font.BOLD, 20));
 		fields[3].setFont(new Font("宋体", Font.BOLD, 20));
 		fields[4].setFont(new Font("宋体", Font.BOLD, 20));
@@ -63,7 +59,7 @@ public class Calculator implements ActionListener {
 		fields[4].setBackground(Color.GRAY);
 	}
 
-	public void addEventHandler() {
+	public void myAddEventHandler() {
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i].addActionListener(this);
 		}
@@ -81,11 +77,16 @@ public class Calculator implements ActionListener {
 
 			char ss = op.charAt(0);
 			switch (ss) {
-				case '+': fields[4].setText(Double.parseDouble(m) + Double.parseDouble(n) + ""); break;
-				case '-': fields[4].setText(Double.parseDouble(m) - Double.parseDouble(n) + ""); break;
-				case '*': fields[4].setText(Double.parseDouble(m) * Double.parseDouble(n) + ""); break;
-				case '/': fields[4].setText(Double.parseDouble(m) / Double.parseDouble(n) + ""); break;
-				default: break;
+				case '+': fields[4].setText(Double.parseDouble(m) + Double.parseDouble(n) + ""); 
+					break;
+				case '-': fields[4].setText(Double.parseDouble(m) - Double.parseDouble(n) + ""); 
+					break;
+				case '*': fields[4].setText(Double.parseDouble(m) * Double.parseDouble(n) + ""); 
+					break;
+				case '/': fields[4].setText(Double.parseDouble(m) / Double.parseDouble(n) + ""); 
+					break;
+				default: 
+					break;
 			}
 		} else {
 			op = str;
@@ -105,6 +106,10 @@ public class Calculator implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new Calculator().showMe();
+		Calculator cc = new Calculator();
+		cc.myInit();
+		cc.mySetFontAndColor();
+		cc.myAddEventHandler();
+		cc.showMe();
 	}
 }

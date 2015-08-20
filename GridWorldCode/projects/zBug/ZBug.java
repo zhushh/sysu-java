@@ -27,8 +27,8 @@ public class ZBug extends Bug
     private int steps;
     private int sideLength;
     private int change;
-    private static final int rotation_angle_1 = 135;
-    private static final int rotation_angle_2 = 225;
+    private static final int ROTATIONANGLE1 = 135;
+    private static final int ROTATIONANGLE2 = 225;
 
     /**
      * Constructs a ZBug that traces a square of a given side length
@@ -57,13 +57,13 @@ public class ZBug extends Bug
         }
         else
         {
-            int current_direction = getDirection();
+            int currentDirection = getDirection();
             if (change == 0) {
                 change++;
-                setDirection(current_direction + rotation_angle_1);
+                setDirection(currentDirection + ROTATIONANGLE1);
             } else if (change == 1) {
                 change++;
-                setDirection(current_direction + rotation_angle_2);
+                setDirection(currentDirection + ROTATIONANGLE2);
             }
             steps = 0;
         }

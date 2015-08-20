@@ -25,8 +25,9 @@ import java.awt.Color;
  * This class runs a world that contains box bugs. <br />
  * This class is not tested on the AP CS A and AB exams.
  */
-public class DancingBugRunner
+public final class DancingBugRunner
 {
+    private DancingBugRunner() {}
     public static void main(String[] args)
     {
         int[] arr = {0, 0, 2, 1, 1, 6, 7, 5};

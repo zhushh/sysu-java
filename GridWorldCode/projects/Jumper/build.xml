@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<project name="Jumper" default="run" basedir=".">
+    <property name="buildDir" value="build"/>
+
+    <target name="init">
+        <delete dir="${buildDir}"/>
+        <mkdir dir="${buildDir}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <mkdir dir="${buildDir}/classes"/>
+        <javac srcdir="${basedir}/src" destdir="${buildDir}/classes" includeantruntime="on">
+        </javac>
+    </target>
+
+    <target name="run" depends="compile">
+        <java classname="JumperRunner" fork="yes" dir="${buildDir}/classes">
+        </java>
+    </target>
+</project>

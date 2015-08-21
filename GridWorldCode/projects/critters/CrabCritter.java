@@ -111,5 +111,5 @@ public class CrabCritter extends Critter
                 locs.add(neighborLoc);
         }
         return locs;
-    }    
+    }
 }

@@ -11,32 +11,31 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * 
+ * @author Cay Horstmann
  * @author Chris Nevison
  * @author Barbara Cloud Wells
- * @author Cay Horstmann
  */
-import info.gridworld.actor.Actor;
-import info.gridworld.actor.Rock;
-import info.gridworld.actor.Critter;
-import info.gridworld.grid.Grid;
+
+import info.gridworld.actor.ActorWorld;
 import info.gridworld.grid.Location;
 
-import java.util.ArrayList;
+import java.awt.Color;
 
 /**
- * A <code>RockHound</code> looks at a limited set of neighbors when it eats and moves.
- * <br />
+ * This class runs a world that contains box bugs. <br />
  * This class is not tested on the AP CS A and AB exams.
  */
-public class RockHound extends Critter
+public final class ChameleonKidRunner
 {
-    public void processActors(ArrayList<Actor> actors)
+    private ChameleonKidRunner() {}
+    public static void main(String[] args)
     {
-        for (Actor a : actors)
-        {
-            if ((a instanceof Rock)) {
-                a.removeSelfFromGrid();
-            }
-        }
+        ActorWorld world = new ActorWorld();
+        ChameleonKid alice = new ChameleonKid();
+        ChameleonKid bob = new ChameleonKid();
+
+        world.add(new Location(7, 8), alice);
+        world.add(new Location(5, 5), bob);
+        world.show();
     }
 }

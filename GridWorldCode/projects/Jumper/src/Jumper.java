@@ -37,7 +37,6 @@ public class Jumper extends Bug
      */
     public Jumper()
     {
-        //setColor(Color.RED);
     }
 
     /**
@@ -55,18 +54,20 @@ public class Jumper extends Bug
     public void move()
     {
         Grid<Actor> gr = getGrid();
-        if (gr == null)
+        if (gr == null) {
             return;
+        }
         Location loc = getLocation();
         Location next = loc.getAdjacentLocation(getDirection());
         if (!gr.isValid(next)) {
             removeSelfFromGrid();
         } else {
             Location nnext = next.getAdjacentLocation(getDirection());
-            if (gr.isValid(nnext))
+            if (gr.isValid(nnext)) {
                 moveTo(nnext);
-            else
+            } else {
                 removeSelfFromGrid();
+            }
         }
     }
 
@@ -77,19 +78,20 @@ public class Jumper extends Bug
     public boolean canMove()
     {
         Grid<Actor> gr = getGrid();
-        if (gr == null)
+        if (gr == null) {
             return false;
+        }
         Location loc = getLocation();
         Location next = loc.getAdjacentLocation(getDirection());
         if (!gr.isValid(next)) {
             return false;
         } else {
             Location nnext = next.getAdjacentLocation(getDirection());
-            if (!gr.isValid(nnext))
+            if (!gr.isValid(nnext)) {
                 return false;
+            }
             // OK to move into empty location
             // Not ok to move onto any other actor or flower
-            // return (neighbor == null) || (neighbor instanceof Flower);
             Actor neighbor = gr.get(nnext);
             return neighbor == null;
         }

@@ -24,16 +24,16 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 /**
- * A <code>RockHound</code> looks at a limited set of neighbors when it eats and moves.
+ * A <code>BlusterCritter</code> looks at a limited set of neighbors when it eats and moves.
  * <br />
  * This class is not tested on the AP CS A and AB exams.
  */
-public class RockHound extends Critter
+public class BlusterCritter extends Critter
 {
     private int courage;
     private static final double DARKENING_FACTOR = 0.05;
 
-    public RockHound(int c)
+    public BlusterCritter(int c)
     {
         courage = c;
     }
@@ -41,14 +41,17 @@ public class RockHound extends Critter
     public ArrayList<Actor> getActors()
     {
         ArrayList<Actor> actors = new ArrayList<Actor>();
-        int row = getRow() - 2;
-        int col = getCol() - 2;
+        Location loc = getLocation();
+        int row = loc.getRow() - 2;
+        int col = loc.getCol() - 2;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                if (row != getRow() || col != getCol()) {
-                    Actor ac = getGrid().get(new Location(row, col));
-                    if (ac != null) {
-                        actors.add(ac);
+                if (getGrid().isValid(new Location(row, col))) {
+                    if (row != loc.getRow() || col != loc.getCol()) {
+                        Actor ac = getGrid().get(new Location(row, col));
+                        if (ac != null) {
+                            actors.add(ac);
+                        }
                     }
                 }
                 col++;
@@ -66,6 +69,21 @@ public class RockHound extends Critter
             int green = (int) (c.getGreen() * (1 - DARKENING_FACTOR));
             int blue = (int) (c.getBlue() * (1 - DARKENING_FACTOR));
 
+            if (red < 0) {
+                red = 0;
+            } else if (red > 255) {
+                red = 255;
+            }
+            if (green < 0) {
+                green = 0;
+            } else if (green > 255) {
+                green = 255;
+            }
+            if (blue < 0) {
+                blue = 0;
+            } else if (blue > 255) {
+                blue = 255;
+            }
             setColor(new Color(red, green, blue));
         } else {
             Color c = getColor();
@@ -73,6 +91,21 @@ public class RockHound extends Critter
             int green = (int) (c.getGreen() * (1 + DARKENING_FACTOR));
             int blue = (int) (c.getBlue() * (1 + DARKENING_FACTOR));
 
+            if (red < 0) {
+                red = 0;
+            } else if (red > 255) {
+                red = 255;
+            }
+            if (green < 0) {
+                green = 0;
+            } else if (green > 255) {
+                green = 255;
+            }
+            if (blue < 0) {
+                blue = 0;
+            } else if (blue > 255) {
+                blue = 255;
+            }
             setColor(new Color(red, green, blue));
         }
     }

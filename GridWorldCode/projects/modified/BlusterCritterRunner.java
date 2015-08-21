@@ -27,9 +27,9 @@ import java.awt.Color;
  * This class runs a world that contains box bugs. <br />
  * This class is not tested on the AP CS A and AB exams.
  */
-public final class RockHoundRunner
+public final class BlusterCritterRunner
 {
-    private RockHoundRunner() {}
+    private BlusterCritterRunner() {}
     public static void main(String[] args)
     {
         ActorWorld world = new ActorWorld();
@@ -37,11 +37,13 @@ public final class RockHoundRunner
         Bug bug2 = new Bug(Color.ORANGE);
         Rock rock1 = new Rock();
         Rock rock2 = new Rock(Color.YELLOW);
-        RockHound alice = new RockHound();
-        RockHound bob = new RockHound();
+
+        BlusterCritter alice = new BlusterCritter(3);
+        BlusterCritter bob = new BlusterCritter(2);
 
         world.add(new Location(7, 8), alice);
         world.add(new Location(5, 5), bob);
+
         world.add(new Location(4, 4), bug1);
         world.add(new Location(7, 2), bug2);
         world.add(new Location(4, 5), rock1);

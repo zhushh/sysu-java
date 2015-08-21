@@ -16,6 +16,8 @@
  * @author Barbara Cloud Wells
  */
 
+import info.gridworld.actor.Bug;
+import info.gridworld.actor.Rock;
 import info.gridworld.actor.ActorWorld;
 import info.gridworld.grid.Location;
 
@@ -34,8 +36,17 @@ public final class ChameleonKidRunner
         ChameleonKid alice = new ChameleonKid();
         ChameleonKid bob = new ChameleonKid();
 
+        Bug bug1 = new Bug(Color.RED);
+
+        Rock rock1 = new Rock();
+        Rock rock2 = new Rock(Color.YELLOW);
+
         world.add(new Location(7, 8), alice);
         world.add(new Location(5, 5), bob);
+        world.add(new Location(4, 4), bug1);
+
+        world.add(new Location(4, 5), rock1);
+        world.add(new Location(3, 8), rock2);
         world.show();
     }
 }

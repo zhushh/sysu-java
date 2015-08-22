@@ -17,10 +17,11 @@
  * @author Cay Horstmann
  */
 
-package info.gridworld.grid;
+import info.gridworld.grid.Grid;
+import info.gridworld.grid.AbstractGrid;
+import info.gridworld.grid.Location;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
  * A <code>SparseBoundedGrid</code> is a rectangular grid with a finite number of
@@ -29,46 +30,9 @@ import java.util.LinkedList;
  */
 public class SparseBoundedGrid<E> extends AbstractGrid<E>
 {
-    //to-do
-    public class SparseGridNode
-    {
-        private Object occupant;
-        private int col;
-        private SparseGridNode next;
-
-        public SparseGridNode getNext()
-        {
-            return next;
-        }
-
-        public void setNext(SparseGridNode obj)
-        {
-            next = obj;
-        }
-
-        public int getCol()
-        {
-            return col;
-        }
-
-        public void setCol(int c)
-        {
-            col = c;
-        }
-
-        public Object getOccupied()
-        {
-            return occupant;
-        }
-
-        public void setOccupied(Object obj)
-        {
-            occupant = obj;
-        }
-    }
-
     private SparseGridNode[] sparseArrays;
     private int sparseCols;
+    private int sparseRows;
 
     public SparseBoundedGrid(int rows, int cols)
     {
@@ -79,12 +43,13 @@ public class SparseBoundedGrid<E> extends AbstractGrid<E>
             throw new IllegalArgumentException("cols <= 0");
         }
         sparseCols = cols;
+        sparseRows = rows;
         sparseArrays = new SparseGridNode[rows];
     }
 
     public int getNumRows()
     {
-        return sparseArrays.length;
+        return sparseRows;
     }
 
     public int getNumCols()
@@ -109,8 +74,9 @@ public class SparseBoundedGrid<E> extends AbstractGrid<E>
             {
                 // If there's an object at this location, put it in the array.
                 Location loc = new Location(r, c);
-                if (get(loc) != null)
+                if (get(loc) != null) {
                     theLocations.add(loc);
+                }
             }
         }
 
@@ -119,44 +85,66 @@ public class SparseBoundedGrid<E> extends AbstractGrid<E>
 
     public E get(Location loc)
     {
-        if (!isValid(loc))
+        if (!isValid(loc)) {
             throw new IllegalArgumentException("Location " + loc
                     + " is not valid");
+        }
 
-        int col = loc.getCol();
         SparseGridNode node = sparseArrays[loc.getRow()];
-        while (node != null && node.getCol() != col)
+        while (node != null)
         {
+            if (node.getCol() == loc.getCol()) {
+                return (E)(node.getOccupied());
+            }
             node = node.getNext();
         }
-        //return (E) occupantArray[loc.getRow()][loc.getCol()]; // unavoidable warning
-        return (E) (node == null? null : node.getOccupied());
+        return null;
     }
 
     public E put(Location loc, E obj)
     {
-        if (!isValid(loc))
+        if (!isValid(loc)) {
             throw new IllegalArgumentException("Location " + loc
                     + " is not valid");
-        if (obj == null)
+        }
+        if (obj == null) {
             throw new NullPointerException("obj == null");
+        }
 
         // Add the object to the grid.
-        E oldOccupant = get(loc);
+        E oldOccupant = remove(loc);
         SparseGridNode node = sparseArrays[loc.getRow()];
-        while (node != null && node.getNext() != null) {
-            node = node.getNext();
-        }
-
-        SparseGridNode curNode = new SparseGridNode();
-        curNode.setOccupied(obj);
-        curNode.setCol(loc.getCol());
-
-        if (node != null) {
-            node.setNext(curNode);
-        } else {
-            sparseArrays[loc.getRow()] = curNode;
-        }
+        sparseArrays[loc.getRow()] = new SparseGridNode(obj, loc.getCol(), node);
         return oldOccupant;
+    }
+
+    public E remove(Location loc)
+    {
+        if (!isValid(loc)) {
+            throw new IllegalArgumentException("Location " + loc
+                    + " is not valid");
+        }
+
+        // Remove the object from the grid.
+        E r = null;
+        SparseGridNode node = sparseArrays[loc.getRow()];
+
+        if (node == null) {
+            return r;
+        } else if (node.getCol() == loc.getCol()) {
+            r = (E)(node.getOccupied());
+            sparseArrays[loc.getRow()] = node.getNext();
+            return r;
+        }
+        while (node != null && node.getNext() != null) {
+            if (node.getNext().getCol() == loc.getCol()) {
+                r = (E)(node.getNext().getOccupied());
+                node.setNext(node.getNext().getNext());
+                break;
+            } else {
+                node = node.getNext();
+            }
+        }
+        return r;
     }
 }

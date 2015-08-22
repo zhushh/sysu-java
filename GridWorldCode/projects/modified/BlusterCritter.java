@@ -42,16 +42,14 @@ public class BlusterCritter extends Critter
     {
         ArrayList<Actor> actors = new ArrayList<Actor>();
         Location loc = getLocation();
+
         int row = loc.getRow() - 2;
-        int col = loc.getCol() - 2;
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        while (row <= loc.getRow() + 2) {
+            int col = loc.getCol() - 2;
+            while (col <= loc.getCol() + 2) {
                 if (getGrid().isValid(new Location(row, col))) {
                     if (row != loc.getRow() || col != loc.getCol()) {
-                        Actor ac = getGrid().get(new Location(row, col));
-                        if (ac != null) {
-                            actors.add(ac);
-                        }
+                        actors.add(getGrid().get(new Location(row, col)));
                     }
                 }
                 col++;
@@ -71,18 +69,12 @@ public class BlusterCritter extends Critter
 
             if (red < 0) {
                 red = 0;
-            } else if (red > 255) {
-                red = 255;
             }
             if (green < 0) {
                 green = 0;
-            } else if (green > 255) {
-                green = 255;
             }
             if (blue < 0) {
                 blue = 0;
-            } else if (blue > 255) {
-                blue = 255;
             }
             setColor(new Color(red, green, blue));
         } else {
@@ -91,19 +83,13 @@ public class BlusterCritter extends Critter
             int green = (int) (c.getGreen() * (1 + DARKENING_FACTOR));
             int blue = (int) (c.getBlue() * (1 + DARKENING_FACTOR));
 
-            if (red < 0) {
-                red = 0;
-            } else if (red > 255) {
+            if (red > 255) {
                 red = 255;
             }
-            if (green < 0) {
-                green = 0;
-            } else if (green > 255) {
+            if (green > 255) {
                 green = 255;
             }
-            if (blue < 0) {
-                blue = 0;
-            } else if (blue > 255) {
+            if (blue > 255) {
                 blue = 255;
             }
             setColor(new Color(red, green, blue));

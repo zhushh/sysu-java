@@ -34,7 +34,7 @@ public class QuickCrab extends CrabCritter
         for (Location loc : getLocationsInDirections(dirs)) {
             if (getGrid().get(loc) == null) {
                 // there is not need to consider the curent position will be get.
-                for (Location locc : loc.getLocationsInDirections(dirs)) {
+                for (Location locc : getLocationsInDirections(dirs)) {
                     if (getGrid().get(locc) == null) {
                         locs.add(locc);
                     }

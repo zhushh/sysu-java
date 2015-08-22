@@ -33,8 +33,8 @@ public class KingCrab extends CrabCritter
         int mycol;
         for (Actor actor : actors)
         {
-            myrow = 2 * actor.getRow() - getRow();
-            mycol = 2 * actor.getCol() - getCol();
+            myrow = 2 * actor.getLocation().getRow() - getLocation().getRow();
+            mycol = 2 * actor.getLocation().getCol() - getLocation().getCol();
             Location loc = new Location(myrow, mycol);
             if (getGrid().isValid(loc) && getGrid().get(loc) == null)
             {

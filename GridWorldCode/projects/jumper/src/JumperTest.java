@@ -1,9 +1,9 @@
 import static org.junit.Assert.*;
 import org.junit.Test;
+import org.junit.BeforeClass;
 import info.gridworld.grid.Location;
 import info.gridworld.actor.ActorWorld;
-import org.junit.BeforeClass;
-import org.junit.Test;
+
 import info.gridworld.actor.Flower;
 import info.gridworld.actor.Rock;
 import info.gridworld.actor.Bug;

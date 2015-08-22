@@ -34,8 +34,9 @@ public class ChameleonKid extends ChameleonCritter
         for (Location loc : getLocationsInDirections(dirs))
         {
             Actor a = getGrid().get(loc);
-            if (a != null)
+            if (a != null) {
                 actors.add(a);
+            }
         }
 
         return actors;
@@ -58,9 +59,18 @@ public class ChameleonKid extends ChameleonCritter
         for (int d : directions)
         {
             Location neighborLoc = loc.getAdjacentLocation(getDirection() + d);
-            if (gr.isValid(neighborLoc))
+            if (gr.isValid(neighborLoc)) {
                 locs.add(neighborLoc);
+            }
         }
         return locs;
+    }
+    /**
+     * Turns towards the new location as it moves.
+     */
+    public void makeMove(Location loc)
+    {
+        setDirection(getLocation().getDirectionToward(loc));
+        super.makeMove(loc);
     }
 }

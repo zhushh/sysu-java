@@ -95,4 +95,13 @@ public class BlusterCritter extends Critter
             setColor(new Color(red, green, blue));
         }
     }
+
+    /**
+     * Turns towards the new location as it moves.
+     */
+    public void makeMove(Location loc)
+    {
+        setDirection(getLocation().getDirectionToward(loc));
+        super.makeMove(loc);
+    }
 }

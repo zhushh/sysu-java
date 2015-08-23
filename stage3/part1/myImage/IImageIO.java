@@ -17,17 +17,15 @@ public class IImageIO implements imagereader.IImageIO
         FileInputStream finput = new FileInputStream(s);
 
         // start reading
-        final int HEADERSIZE = 14;
-        final int IMAGEINFO = 40;
-        //static final int[] BITSETS = {32, 24, 16, 8}
+        int headSize = 14;
+        int imageInfo = 40;
 
-        byte[] header = new byte[HEADERSIZE];
-        byte[] info = new byte[IMAGEINFO];
+        byte[] header = new byte[headSize];
+        byte[] info = new byte[imageInfo];
 
-        finput.read(header, 0, HEADERSIZE);
-        finput.read(info, 0, IMAGEINFO);
+        finput.read(header, 0, headSize);
+        finput.read(info, 0, imageInfo);
 
-        int imgfileSize = changeInt(header, 5);
         int imgWidth = changeInt(info, 7);
         int imgHeight = changeInt(info, 11);
 

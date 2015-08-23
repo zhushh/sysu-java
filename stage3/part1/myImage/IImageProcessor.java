@@ -43,10 +43,8 @@ public class IImageProcessor implements imagereader.IImageProcessor
         }
         public int filterRGB(int x, int y, int rgb) {
             int blue = rgb & 0xff;
-            rgb >>= 8;
-            int green = rgb & 0xff;
-            rgb >>= 8;
-            int red = rgb & 0xff;
+            int green = (rgb >> 8) & 0xff;
+            int red = (rgb >> 16) & 0xff;
             int gray = (int)(0.299 * red + 0.587 * green + 0.114 * blue);
             return (0xff000000 | (gray << 16) | (gray << 8) | gray);
         }

@@ -17,8 +17,8 @@ public class IImageIO implements imagereader.IImageIO
         FileInputStream finput = new FileInputStream(s);
 
         // start reading
-        static final int HEADERSIZE = 14;
-        static final int IMAGEINFO = 40;
+        final int HEADERSIZE = 14;
+        final int IMAGEINFO = 40;
         //static final int[] BITSETS = {32, 24, 16, 8}
 
         byte[] header = new byte[HEADERSIZE];
@@ -65,7 +65,13 @@ public class IImageIO implements imagereader.IImageIO
 
     public Image myWrite(Image image, String s) throws IOException
     {
-        // to-do
+        int imgWidth = image.getWidth(null);
+        int imgHeight = image.getHeight(null);
+        File foutput = new File(s);
+        BufferedImage bfImage = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_BGR);
+        bfImage.getGraphics().drawImage(image, 0, 0, imgWidth, imgHeight, null);
+        ImageIO.write(bfImage, "bmp", foutput);
+        return image;
     }
 
     public int changeInt(byte[] bi, int start){

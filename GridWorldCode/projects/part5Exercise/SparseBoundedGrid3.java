@@ -22,19 +22,20 @@ import info.gridworld.grid.AbstractGrid;
 import info.gridworld.grid.Location;
 
 import java.util.ArrayList;
+import java.util.*;
 
 /**
- * A <code>SparseBoundedGrid</code> is a rectangular grid with a finite number of
+ * A <code>SparseBoundedGrid3</code> is a rectangular grid with a finite number of
  * rows and columns. <br />
  * The implementation of this class is testable on the AP CS AB exam.
  */
-public class SparseBoundedGrid<E> extends AbstractGrid<E>
+public class SparseBoundedGrid3<E> extends AbstractGrid<E>
 {
-    private SparseGridNode[] sparseArrays;
+    private Map<Location, E> sparseMap;
     private int sparseCols;
     private int sparseRows;
 
-    public SparseBoundedGrid(int rows, int cols)
+    public SparseBoundedGrid3(int rows, int cols)
     {
         if (rows <= 0) {
             throw new IllegalArgumentException("rows <= 0");
@@ -44,7 +45,7 @@ public class SparseBoundedGrid<E> extends AbstractGrid<E>
         }
         sparseCols = cols;
         sparseRows = rows;
-        sparseArrays = new SparseGridNode[rows];
+        sparseMap = new TreeMap<Location, E>();
     }
 
     public int getNumRows()
@@ -65,17 +66,11 @@ public class SparseBoundedGrid<E> extends AbstractGrid<E>
 
     public ArrayList<Location> getOccupiedLocations()
     {
-        ArrayList<Location> theLocations = new ArrayList<Location>();
-
-        for (int r = 0; i < getNumRows(); r++) {
-            node = sparseArrays[r];
-            while (node != null) {
-                theLocations.add(new Location(r, node.getCol()));
-                node = node.getNext();
-            }
+        ArrayList<Location> a = new ArrayList<Location>();
+        for (Location loc : sparseMap.keySet()) {
+            a.add(loc);
         }
-
-        return theLocations;
+        return a;
     }
 
     public E get(Location loc)
@@ -85,15 +80,7 @@ public class SparseBoundedGrid<E> extends AbstractGrid<E>
                     + " is not valid");
         }
 
-        SparseGridNode node = sparseArrays[loc.getRow()];
-        while (node != null)
-        {
-            if (node.getCol() == loc.getCol()) {
-                return (E)(node.getOccupied());
-            }
-            node = node.getNext();
-        }
-        return null;
+        return sparseMap.get(loc);
     }
 
     public E put(Location loc, E obj)
@@ -107,10 +94,7 @@ public class SparseBoundedGrid<E> extends AbstractGrid<E>
         }
 
         // Add the object to the grid.
-        E oldOccupant = remove(loc);
-        SparseGridNode node = sparseArrays[loc.getRow()];
-        sparseArrays[loc.getRow()] = new SparseGridNode(obj, loc.getCol(), node);
-        return oldOccupant;
+        return sparseMap.put(loc, obj);
     }
 
     public E remove(Location loc)
@@ -121,25 +105,6 @@ public class SparseBoundedGrid<E> extends AbstractGrid<E>
         }
 
         // Remove the object from the grid.
-        E r = null;
-        SparseGridNode node = sparseArrays[loc.getRow()];
-
-        if (node == null) {
-            return r;
-        } else if (node.getCol() == loc.getCol()) {
-            r = (E)(node.getOccupied());
-            sparseArrays[loc.getRow()] = node.getNext();
-            return r;
-        }
-        while (node != null && node.getNext() != null) {
-            if (node.getNext().getCol() == loc.getCol()) {
-                r = (E)(node.getNext().getOccupied());
-                node.setNext(node.getNext().getNext());
-                break;
-            } else {
-                node = node.getNext();
-            }
-        }
-        return r;
+        return sparseMap.remove(loc);
     }
 }

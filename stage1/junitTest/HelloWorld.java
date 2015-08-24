@@ -4,13 +4,13 @@
 import java.util.*;
 
 public class HelloWorld {
-	private String str;
+    private String str;
 
-	public void hello() {
-		str = "Hello World!";
-	}
+    public void hello() {
+        str = "Hello World!";
+    }
 
-	public String getStr() {
-		return str;
-	}
+    public String getStr() {
+        return str;
+    }
 }

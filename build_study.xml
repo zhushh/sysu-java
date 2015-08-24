@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<project name="propertyStudy" default="example">
+	<property name="name" value="amigo"/>
+	<property name="age" value="25"/>
+	<target name="example">
+		<echo message="name: ${name}, age: ${age}"/>
+		<echo message="success" />
+		<description>
+			the the message can append a newline to file system.log
+			because '&#10;'
+		</description>
+		<echo message="Hello,Amigo&#10;" file="logs/system.log" append="true" />
+
+		<mkdir dir="build" />
+		<mkdir dir="build/tt" />
+		<copy file="HelloWorld.java" tofile="build/temp.java" />
+		<move file="build/temp.java" tofile="./temp.java" />
+		<move todir=".">
+			<fileset dir="build/tt"/>
+		</move>
+
+		<delete file="temp.java" />
+		<delete includeEmptyDirs="true">
+			<fileset dir="./build" includes="**/*.java"/>
+		</delete>
+		<delete dir="tt" />
+		<delete dir="build" />
+	</target>
+</project>

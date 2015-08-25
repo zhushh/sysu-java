@@ -1,3 +1,4 @@
+package info.gridworld.maze;
 
 import info.gridworld.actor.Rock;
 import info.gridworld.actor.Actor;
@@ -48,8 +49,6 @@ public class MyMazeBug extends Bug {
                 hasShown = true;
             }
         } else if (willMove) {
-            // call selectNextToMove method to get the next
-            selectNextToMove();
             move();
             //increase step count when move 
             stepCount++;
@@ -70,11 +69,11 @@ public class MyMazeBug extends Bug {
         }
         ArrayList<Location> valid = new ArrayList<Location>();
 
-        int[] dirs = {
-            Location.NORTH, Location.EAST, Location.SOUTH, Location.WEST
-        };
-        for (int d : dirs) {
-            Location tloc = loc.getAdjacentLocation(d);
+        int row = loc.getRow();
+        int col = loc.getCol();
+        int[][] to = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+        for (int i = 0; i < 4; i++) {
+            Location tloc = new Location(row+to[i][0], col+to[i][1]);
             if (!gr.isValid(tloc))
             {
                 continue;
@@ -84,7 +83,7 @@ public class MyMazeBug extends Bug {
                 valid.add(tloc);
             }
             // check that is end
-            else if ((gr.get(tloc) instanceof Rock) && gr.get(tloc).getColor().getRed() == Color.RED.getRed())
+            if ((gr.get(tloc) instanceof Rock) && gr.get(tloc).getColor().getRed() == Color.RED.getRed())
             {
                 isEnd = true;
             }
@@ -112,30 +111,6 @@ public class MyMazeBug extends Bug {
         return false;
     }
 
-    // select a loc to move
-    public Location selectRandomMove(ArrayList<Location> locs)
-    {
-        if (locs == null) {
-            return null;
-        } else {
-            return locs.get((int)(Math.random() * locs.size()));
-        }
-    }
-
-    // select next to move
-    public void selectNextToMove()
-    {
-        ArrayList<Location> valid = getValid(getLocation());
-        if (valid != null && valid.size() > 0) {    // go ahead
-            next = selectRandomMove(valid);
-            valid.add(getLocation());
-            crossLocation.push(valid);
-        } else if (!crossLocation.empty()) {    // go back
-            next = crossLocation.peek().get(crossLocation.peek().size() - 1);
-            crossLocation.pop();
-        }
-    }
-
     /**
      * Moves the bug forward, putting a flower into the location it previously
      * occupied.
@@ -147,6 +122,16 @@ public class MyMazeBug extends Bug {
         }
 
         last = getLocation();       // record last 
+
+        ArrayList<Location> valid = getValid(getLocation());
+        if (valid != null && valid.size() > 0) {    // go ahead
+            next = valid.get((int)(Math.random() * valid.size()));
+            valid.add(getLocation());
+            crossLocation.push(valid);
+        } else if (!crossLocation.empty()) {    // go back
+            next = crossLocation.peek().get(crossLocation.peek().size() - 1);
+            crossLocation.pop();
+        }
 
         if (gr.isValid(next)) {
             setDirection(getLocation().getDirectionToward(next));

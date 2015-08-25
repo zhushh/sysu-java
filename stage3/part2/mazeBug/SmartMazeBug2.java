@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * A <code>MyMazeBug</code> can find its way in a maze. <br />
  * The implementation of this class is testable on the AP CS A and AB exams.
  */
-public class SmartMazeBug extends Bug {
+public class SmartMazeBug2 extends Bug {
     public Location next;
     public Location last;
     public boolean isEnd = false;
@@ -26,6 +26,7 @@ public class SmartMazeBug extends Bug {
 
     public static final int TOWARDS = 4;
     public int[] towards = new int[TOWARDS];
+    public int lastDirection;
     //public boolean isGoBack = false;
 
     /**
@@ -34,13 +35,14 @@ public class SmartMazeBug extends Bug {
      * @param length
      *            the side length
      */
-    public SmartMazeBug() {
+    public SmartMazeBug2() {
         setColor(Color.GREEN);
         last = new Location(0, 0);
         // set init time
         for (int i = 0; i < TOWARDS; i++) {
             towards[i] = 1;
         }
+        lastDirection = getDirection();
     }
 
     /**
@@ -126,34 +128,37 @@ public class SmartMazeBug extends Bug {
         if (locs == null || locs.size() <= 0) {
             return null;
         } else {
-            // return locs.get((int)(Math.random() * locs.size()));
-            int sum = 0;
-            boolean[] exist = new boolean[TOWARDS];
-            for (int i = 0; i < TOWARDS; i++) {
-                exist[i] = false;
-            }
-
+            int r = 0;
+            int maxSteps = -1;
             for (Location loc : locs) {
                 switch (getLocation().getDirectionToward(loc)) {
-                    case Location.NORTH: sum += towards[0]; exist[0] = true; break;
-                    case Location.EAST: sum += towards[1]; exist[1] = true; break;
-                    case Location.SOUTH: sum += towards[2]; exist[2] = true; break;
-                    case Location.WEST: sum += towards[3]; exist[3] = true; break;
+                    case Location.NORTH: 
+                        if (maxSteps <= towards[0]) {
+                            r = 0;
+                            maxSteps = towards[0];
+                        }
+                        break;
+                    case Location.EAST: 
+                        if (maxSteps <= towards[1]) {
+                            r = 1;
+                            maxSteps = towards[1];
+                        }
+                        break;
+                    case Location.SOUTH: 
+                        if (maxSteps <= towards[2]) {
+                            r = 2;
+                            maxSteps = towards[2];
+                        }
+                        break;
+                    case Location.WEST: 
+                        if (maxSteps <= towards[3]) {
+                            r = 3;
+                            maxSteps = towards[3];
+                        }
+                        break;
                 }
             }
-
-            int r = (int)(Math.random() * sum);
-            int cur = 0;
-            for (int i = 0; i < TOWARDS; i++) {
-                if (exist[i]) {
-                    cur += towards[i];
-                }
-                if (exist[i] && cur >= r) {
-                    return getLocation().getAdjacentLocation(i * 90);
-                }
-            }
-
-            return locs.get(locs.size() - 1);
+            return getLocation().getAdjacentLocation(r * 90);
         }
     }
 
@@ -166,25 +171,37 @@ public class SmartMazeBug extends Bug {
             valid.add(getLocation());
             crossLocation.push(valid);
 
-            switch (getLocation().getDirectionToward(next)) {
-                case Location.NORTH: towards[0]++; break;
-                case Location.EAST: towards[1]++; break;
-                case Location.SOUTH: towards[2]++; break;
-                case Location.WEST: towards[3]++; break;
-            }
+            // if (getLocation().getDirectionToward(next) != lastDirection) {
+
+                switch (getLocation().getDirectionToward(next)) {
+                    case Location.NORTH: towards[0]++; break;
+                    case Location.EAST: towards[1]++; break;
+                    case Location.SOUTH: towards[2]++; break;
+                    case Location.WEST: towards[3]++; break;
+                }
 
         } else if (!crossLocation.empty()) {    // go back
             next = crossLocation.peek().get(crossLocation.peek().size() - 1);
             crossLocation.pop();
 
-            switch (getLocation().getDirectionToward(next)) {
-                case Location.NORTH: towards[2]--; break;
-                case Location.EAST: towards[3]--; break;
-                case Location.SOUTH: towards[0]--; break;
-                case Location.WEST: towards[1]--; break;
-            }
+            //if (getLocation().getDirectionToward(next) != lastDirection) {
+
+                switch (getLocation().getDirectionToward(next)) {
+                    case Location.NORTH: towards[2]--; break;
+                    case Location.EAST: towards[3]--; break;
+                    case Location.SOUTH: towards[0]--; break;
+                    case Location.WEST: towards[1]--; break;
+                }
 
         }
+
+        System.out.println("Current towards: ");
+
+        for (int i = 0; i < TOWARDS; i++) {
+            System.out.println("towards " + i + " is " + towards[i]);
+        }
+        //lastDirection = getLocation().getDirectionToward(next);
+        lastDirection = getDirection();
     }
 
     /**

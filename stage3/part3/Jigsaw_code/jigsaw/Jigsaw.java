@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.Vector;
 
+
 /** 在此类中填充算法，完成重拼图游戏（N-数码问题）
  * @author abe
  *
@@ -345,13 +346,61 @@ public class Jigsaw {
 	 * @param jNode - 要计算代价估计值的节点；此函数会改变该节点的estimatedValue属性值。
 	 */
 	private void estimateValue(JigsawNode jNode) {
+		int manhattan = 0;
+		int euclidean = 0;
+		int chebyshev = 0;
+
 		int s = 0; // 后续节点不正确的数码个数
 		int dimension = JigsawNode.getDimension();
-		for(int index =1 ; index<dimension*dimension; index++){
-			if(jNode.getNodesState()[index]+1!=jNode.getNodesState()[index+1])
-				s++;
+		for(int index =0 ; index<dimension*dimension; index++){
+			if(jNode.getNodesState()[index]+1!=jNode.getNodesState()[index+1]) {
+			 	s++;
+			 }
+			manhattan += getManhattanDistance(index, jNode.getNodesState()[index+1]-1);
+			euclidean += getEuclideanDistance(index, jNode.getNodesState()[index+1]-1);
+			chebyshev += getChebyshevDistance(index, jNode.getNodesState()[index+1]-1);
 		}
-		jNode.setEstimatedValue(s);
+		// jNode.setEstimatedValue(s);
+		// jNode.setEstimatedValue(manhattan);		// fail
+		// jNode.setEstimatedValue(euclidean);		// fail
+		// jNode.setEstimatedValue(chebyshev);		// this method OK
+		jNode.setEstimatedValue(s + chebyshev);
+	}
+
+	/**
+	 * added function
+	 *
+	 */
+	private int getManhattanDistance(int x, int y) {
+		// to-do
+		int dimension = JigsawNode.getDimension();
+		int xx = x / dimension;
+		int xy = x % dimension;
+		int yx = y / dimension;
+		int yy = y % dimension;
+		return Math.abs(xx - yx) + Math.abs(xy - yy);
+	}
+
+	private int getEuclideanDistance(int x, int y) {
+		// to-do
+		int dimension = JigsawNode.getDimension();
+		int xx = x / dimension;
+		int xy = x % dimension;
+		int yx = y / dimension;
+		int yy = y % dimension;
+		int xdiff = xx - yx;
+		int ydiff = xy - yy;
+		return (int)(Math.sqrt(xdiff*xdiff + ydiff*ydiff));
+	}
+
+	private int getChebyshevDistance(int x, int y) {
+		// to-do
+		int dimension = JigsawNode.getDimension();
+		int xx = x / dimension;
+		int xy = x % dimension;
+		int yx = y / dimension;
+		int yy = y % dimension;
+		return (Math.abs(xx-yx) > Math.abs(xy-yy) ? Math.abs(xx-yx) : Math.abs(xy-yy));
 	}
 
 }

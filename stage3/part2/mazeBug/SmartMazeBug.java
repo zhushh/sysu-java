@@ -17,16 +17,15 @@ import javax.swing.JOptionPane;
  * The implementation of this class is testable on the AP CS A and AB exams.
  */
 public class SmartMazeBug extends Bug {
-    public Location next;
-    public Location last;
-    public boolean isEnd = false;
-    public Stack<ArrayList<Location>> crossLocation = new Stack<ArrayList<Location>>();
-    public Integer stepCount = 0;
-    boolean hasShown = false;//final message has been shown
+    private Location next;
+    private Location last;
+    private boolean isEnd = false;
+    private Stack<ArrayList<Location>> crossLocation = new Stack<ArrayList<Location>>();
+    private Integer stepCount = 0;
+    private boolean hasShown = false;//final message has been shown
 
     public static final int TOWARDS = 4;
-    public int[] towards = new int[TOWARDS];
-    //public boolean isGoBack = false;
+    private int[] towards = new int[TOWARDS];
 
     /**
      * Constructs a box bug that traces a square of a given side length
@@ -48,9 +47,9 @@ public class SmartMazeBug extends Bug {
      */
     public void act() {
         boolean willMove = canMove();
-        if (isEnd == true) {
+        if (isEnd) {
         //to show step count when reach the goal        
-            if (hasShown == false) {
+            if (!hasShown) {
                 String msg = stepCount.toString() + " steps";
                 JOptionPane.showMessageDialog(null, msg);
                 hasShown = true;
@@ -111,10 +110,10 @@ public class SmartMazeBug extends Bug {
             ArrayList<Location> valid = getValid(getLocation());
             if (valid != null && valid.size() > 0) {
                 return true;
-            } else if (!crossLocation.empty()) {
-                return true;
-            } else {
+            } else if (crossLocation.empty()) {
                 return false;
+            } else {
+                return true;
             }
         }
         return false;
@@ -135,10 +134,22 @@ public class SmartMazeBug extends Bug {
 
             for (Location loc : locs) {
                 switch (getLocation().getDirectionToward(loc)) {
-                    case Location.NORTH: sum += towards[0]; exist[0] = true; break;
-                    case Location.EAST: sum += towards[1]; exist[1] = true; break;
-                    case Location.SOUTH: sum += towards[2]; exist[2] = true; break;
-                    case Location.WEST: sum += towards[3]; exist[3] = true; break;
+                    case Location.NORTH: 
+                        sum += towards[0]; 
+                        exist[0] = true; 
+                        break;
+                    case Location.EAST: 
+                        sum += towards[1]; 
+                        exist[1] = true; 
+                        break;
+                    case Location.SOUTH: 
+                        sum += towards[2]; 
+                        exist[2] = true; 
+                        break;
+                    case Location.WEST: 
+                        sum += towards[3]; 
+                        exist[3] = true; 
+                        break;
                 }
             }
 
@@ -167,10 +178,18 @@ public class SmartMazeBug extends Bug {
             crossLocation.push(valid);
 
             switch (getLocation().getDirectionToward(next)) {
-                case Location.NORTH: towards[0]++; break;
-                case Location.EAST: towards[1]++; break;
-                case Location.SOUTH: towards[2]++; break;
-                case Location.WEST: towards[3]++; break;
+                case Location.NORTH: 
+                    towards[0]++; 
+                    break;
+                case Location.EAST: 
+                    towards[1]++; 
+                    break;
+                case Location.SOUTH: 
+                    towards[2]++; 
+                    break;
+                case Location.WEST: 
+                    towards[3]++; 
+                    break;
             }
 
         } else if (!crossLocation.empty()) {    // go back
@@ -178,10 +197,18 @@ public class SmartMazeBug extends Bug {
             crossLocation.pop();
 
             switch (getLocation().getDirectionToward(next)) {
-                case Location.NORTH: towards[2]--; break;
-                case Location.EAST: towards[3]--; break;
-                case Location.SOUTH: towards[0]--; break;
-                case Location.WEST: towards[1]--; break;
+                case Location.NORTH: 
+                    towards[2]--; 
+                    break;
+                case Location.EAST: 
+                    towards[3]--; 
+                    break;
+                case Location.SOUTH: 
+                    towards[0]--; 
+                    break;
+                case Location.WEST: 
+                    towards[1]--; 
+                    break;
             }
 
         }

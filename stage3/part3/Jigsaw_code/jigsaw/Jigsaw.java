@@ -295,7 +295,7 @@ public class Jigsaw {
 		PrintWriter pw = new PrintWriter(new FileWriter(filePath));
 		
 		// 访问节点数大于30000个则认为搜索失败
-		int maxNodesNum = 30000;  
+		int maxNodesNum = 25000;  
 		
 		// 用以存放某一节点的邻接节点
 		Vector<JigsawNode> followJNodes = new Vector<JigsawNode>(); 
@@ -360,11 +360,17 @@ public class Jigsaw {
 			euclidean += getEuclideanDistance(index, jNode.getNodesState()[index+1]-1);
 			chebyshev += getChebyshevDistance(index, jNode.getNodesState()[index+1]-1);
 		}
-		// jNode.setEstimatedValue(s);
+		// jNode.setEstimatedValue(s);				//fail
 		// jNode.setEstimatedValue(manhattan);		// fail
 		// jNode.setEstimatedValue(euclidean);		// fail
 		// jNode.setEstimatedValue(chebyshev);		// this method OK
-		jNode.setEstimatedValue(s + chebyshev);
+		// jNode.setEstimatedValue(s + chebyshev);
+		// jNode.setEstimatedValue(s + chebyshev + euclidean);
+		// jNode.setEstimatedValue(chebyshev + euclidean);	//fail
+		// jNode.setEstimatedValue(s+ chebyshev + manhattan);
+		// jNode.setEstimatedValue(11*s+7*manhattan +5*chebyshev+euclidean);
+		// jNode.setEstimatedValue(5*s+4*chebyshev);
+		jNode.setEstimatedValue(5*s+4*chebyshev+2*manhattan+euclidean);
 	}
 
 	/**
@@ -401,6 +407,17 @@ public class Jigsaw {
 		int yx = y / dimension;
 		int yy = y % dimension;
 		return (Math.abs(xx-yx) > Math.abs(xy-yy) ? Math.abs(xx-yx) : Math.abs(xy-yy));
+	}
+
+	private int getMyEstimateValue(int x, int y) {
+		int dimension = JigsawNode.getDimension();
+		int xx = x / dimension;
+		int xy = x % dimension;
+		int yx = y / dimension;
+		int yy = y % dimension;
+		int xdiff = xx - yx;
+		int ydiff = xy - yy;
+		return (xdiff*xdiff + ydiff*ydiff);
 	}
 
 }

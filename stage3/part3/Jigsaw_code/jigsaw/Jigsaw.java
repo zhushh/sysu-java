@@ -356,21 +356,35 @@ public class Jigsaw {
 			if(jNode.getNodesState()[index]+1!=jNode.getNodesState()[index+1]) {
 			 	s++;
 			 }
+
 			manhattan += getManhattanDistance(index, jNode.getNodesState()[index+1]-1);
 			euclidean += getEuclideanDistance(index, jNode.getNodesState()[index+1]-1);
 			chebyshev += getChebyshevDistance(index, jNode.getNodesState()[index+1]-1);
 		}
-		// jNode.setEstimatedValue(s);				//fail
-		// jNode.setEstimatedValue(manhattan);		// fail
-		// jNode.setEstimatedValue(euclidean);		// fail
-		// jNode.setEstimatedValue(chebyshev);		// this method OK
-		// jNode.setEstimatedValue(s + chebyshev);
-		// jNode.setEstimatedValue(s + chebyshev + euclidean);
-		// jNode.setEstimatedValue(chebyshev + euclidean);	//fail
-		// jNode.setEstimatedValue(s+ chebyshev + manhattan);
-		// jNode.setEstimatedValue(11*s+7*manhattan +5*chebyshev+euclidean);
-		// jNode.setEstimatedValue(5*s+4*chebyshev);
-		jNode.setEstimatedValue(5*s+4*chebyshev+2*manhattan+euclidean);
+
+		// jNode.setEstimatedValue(5*s+4*chebyshev+2*manhattan+euclidean);
+		jNode.setEstimatedValue(8*s+5*chebyshev+4*manhattan+6*euclidean);
+		//jNode.setEstimatedValue(8*s+7*chebyshev+2*manhattan+6*euclidean);		// special
+		
+		// if (this.searchedNodesNum > 3000) {
+		// 	jNode.setEstimatedValue(8*s+7*chebyshev+2*manhattan+6*euclidean);
+		// } else {
+		// 	jNode.setEstimatedValue(8*s+5*chebyshev+4*manhattan+6*euclidean);
+		// }
+
+		//jNode.setEstimatedValue(6*s+4*chebyshev+3*manhattan+8*euclidean);
+		//if (this.searchedNodesNum < 3000) {
+		//	jNode.setEstimatedValue(8*s+7*chebyshev+2*manhattan+6*euclidean);
+		//} 
+		//else if (this.searchedNodesNum < 7000 || this.searchedNodesNum > 11000)  {
+		//	jNode.setEstimatedValue(8*s+5*chebyshev+4*manhattan+6*euclidean);
+		//}
+		//else {
+		//	//jNode.setEstimatedValue(8*s+6*chebyshev+4*manhattan+10*euclidean);
+		//	jNode.setEstimatedValue(7*s+4*chebyshev+4*manhattan+12*euclidean);
+		//}
+		// jNode.setEstimatedValue(8*s+5*chebyshev+4*manhattan+9*euclidean);
+
 	}
 
 	/**

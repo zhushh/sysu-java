@@ -350,6 +350,13 @@ public class Jigsaw {
 		int euclidean = 0;
 		int chebyshev = 0;
 
+		int badLocation = 0;
+		int sumDiff = 0;
+
+		int lastSmallNum = 25;
+		int zeroPosition = jNode.getNodesState()[0];
+		int firstBigNum = -1;
+
 		int s = 0; // 后续节点不正确的数码个数
 		int dimension = JigsawNode.getDimension();
 		for(int index =0 ; index<dimension*dimension; index++){
@@ -357,34 +364,31 @@ public class Jigsaw {
 			 	s++;
 			 }
 
+			 if (jNode.getNodesState()[index] != index) {
+			 	badLocation++;
+			 }
+
+			 if (index < dimension) {
+			 	if (jNode.getNodesState()[index] > firstBigNum) {
+			 		firstBigNum = jNode.getNodesState()[index];
+			 	}
+			 }
+
+			 if (index > dimension*dimension - dimension) {
+			 	if (jNode.getNodesState()[index] < lastSmallNum) {
+			 		lastSmallNum = jNode.getNodesState()[index];
+			 	}
+			 }
+
+			sumDiff += (jNode.getNodesState()[index+1] - (index+1));
+
 			manhattan += getManhattanDistance(index, jNode.getNodesState()[index+1]-1);
 			euclidean += getEuclideanDistance(index, jNode.getNodesState()[index+1]-1);
 			chebyshev += getChebyshevDistance(index, jNode.getNodesState()[index+1]-1);
 		}
 
-		// jNode.setEstimatedValue(5*s+4*chebyshev+2*manhattan+euclidean);
-		jNode.setEstimatedValue(8*s+5*chebyshev+4*manhattan+6*euclidean);
-		//jNode.setEstimatedValue(8*s+7*chebyshev+2*manhattan+6*euclidean);		// special
-		
-		// if (this.searchedNodesNum > 3000) {
-		// 	jNode.setEstimatedValue(8*s+7*chebyshev+2*manhattan+6*euclidean);
-		// } else {
-		// 	jNode.setEstimatedValue(8*s+5*chebyshev+4*manhattan+6*euclidean);
-		// }
-
-		//jNode.setEstimatedValue(6*s+4*chebyshev+3*manhattan+8*euclidean);
-		//if (this.searchedNodesNum < 3000) {
-		//	jNode.setEstimatedValue(8*s+7*chebyshev+2*manhattan+6*euclidean);
-		//} 
-		//else if (this.searchedNodesNum < 7000 || this.searchedNodesNum > 11000)  {
-		//	jNode.setEstimatedValue(8*s+5*chebyshev+4*manhattan+6*euclidean);
-		//}
-		//else {
-		//	//jNode.setEstimatedValue(8*s+6*chebyshev+4*manhattan+10*euclidean);
-		//	jNode.setEstimatedValue(7*s+4*chebyshev+4*manhattan+12*euclidean);
-		//}
-		// jNode.setEstimatedValue(8*s+5*chebyshev+4*manhattan+9*euclidean);
-
+		int value = 5*badLocation+21*s+18*manhattan+17*euclidean+7*sumDiff;
+		jNode.setEstimatedValue(value);
 	}
 
 	/**

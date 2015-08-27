@@ -5,6 +5,8 @@ import java.io.IOException;
 import jigsaw.Jigsaw;
 import jigsaw.JigsawNode;
 
+import java.util.ArrayList;
+
 public class RunnerPart2 {
 	/**测试脚本-2
 	 * 实验任务二：利用启发式搜索，求解随机5*5拼图（24-数码问题）
@@ -24,19 +26,33 @@ public class RunnerPart2 {
 		// 生成目标状态对象destNode: {25,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,0};
 		JigsawNode destNode = new JigsawNode(new int[]{25,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,0});  		
 
+int sum = 0;
+int suc = 0;
+
+for (int i = 0; i < 10; i++) {
 		// 生成随机初始状态对象startNode：将目标状态打散，生成可解的随机初始状态
 		JigsawNode startNode = Jigsaw.scatter(destNode, 1000);
 		//JigsawNode startNode = new JigsawNode(new int[]{19,8,7,9,23,10,3,19,5,4,14,2,20,11,6,15,22,13,16,0,1,21,12,18,24,17});
 
 	// test by mySelf
 	//JigsawNode startNode = new JigsawNode(new int[]{
-	//	15,2,13,17,15,20,23,16,5,4,12,24,10,1,11,0,6,8,14,21,22,9,18,3,19,7
+	//	19,6,9,17,19,3,24,14,5,11,2,15,18,20,1,10,12,16,22,0,13,21,23,7,8,4
 	//});
 		// 生成jigsaw对象：设置初始状态节点startNode和目标状态节点destNode
 		Jigsaw jigsaw = new Jigsaw(startNode, destNode);
 
 		// 执行启发式搜索示例算法
 		jigsaw.ASearch();
+		if (jigsaw.isCompleted()) {
+			suc++;
+			sum += jigsaw.getSearchedNodesNum();
+		}
+
+}
+
+System.out.println("The sum searchNodesNum is: " + sum / suc);
+System.out.println("The sum successful case: : " + suc);
+
 	}
 
 }
